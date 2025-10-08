@@ -14,7 +14,7 @@ def check(x):
     else:
         return True
 
-while check(a) != True or check(b) != True:
+while not(check(a)) or not(check(b)):
     print('Введите два целых числа, причём оба из них быть 0 одновременно быть не могут')
     a,b = input(), input()
 
