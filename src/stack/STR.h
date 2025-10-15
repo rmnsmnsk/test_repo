@@ -4,7 +4,7 @@
 typedef struct obj{
     int data;
     struct obj* next;
-}Elem
+}Elem;
 
 Elem* new(void); //создаю голову, указатель указывает на NULL
 Elem* push(Elem* top , char data); //добавляю на вершину стэка новый элемент, при этом функция возвращает указатель на самый верхний элемент

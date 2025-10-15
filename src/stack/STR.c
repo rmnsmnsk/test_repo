@@ -1,5 +1,7 @@
-#include"STR.h"
-#include<stddef.h>
+#include "STR.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stddef.h>
 
 Elem* new(void){
     return NULL;
