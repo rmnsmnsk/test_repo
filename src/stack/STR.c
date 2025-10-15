@@ -46,4 +46,26 @@ void delete(Elem** top){ //аналогично с pop я должен меня�
         *top = back;
     }
 
+void delete1(Elem** top){ 
+
+    if ((*top) == NULL){
+        printf("Stack is empty\n");
+        return '\0';
+    }
+    else{
+        Elem* back = (*top) -> next;
+        free(*top);
+        *top = back;
+    }
 }
+
+char see(Elem* top){
+    if (top == NULL){
+        printf("Stack is empty\n");
+        return '\0';
+    }
+    else{
+        return top -> data;
+    }
+}
+
