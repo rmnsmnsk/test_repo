@@ -1,5 +1,8 @@
 #include"STR.h"
-#include<stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stddef.h>
+
 
 Elem* new(void){
     return NULL;
@@ -17,7 +20,6 @@ Elem* push(Elem* top , char data){
 char pop(Elem** top){ //т.к нужно взять последний элемент, то top нужно будет перезаписать, а для этого сам top нужно будет изменить
 
     if (*top == NULL){
-        printf("Stack is empty\n");
         return '\0';
     }
     char data = (*top) -> data;
@@ -45,23 +47,10 @@ void delete(Elem** top){ //аналогично с pop я должен меня�
         free(*top);
         *top = back;
     }
-
-void delete1(Elem** top){ 
-
-    if ((*top) == NULL){
-        printf("Stack is empty\n");
-        return '\0';
-    }
-    else{
-        Elem* back = (*top) -> next;
-        free(*top);
-        *top = back;
-    }
 }
 
 char see(Elem* top){
     if (top == NULL){
-        printf("Stack is empty\n");
         return '\0';
     }
     else{
