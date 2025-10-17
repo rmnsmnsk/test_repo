@@ -1,4 +1,3 @@
-import pytest
 import random
 
 def heap_sort(arr):
