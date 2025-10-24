@@ -6,7 +6,7 @@ def curry(f, arn):
 
     if arn < 0:
         raise ValueError("Арность не может быть отрицательной")
-    if type(arn) != int:
+    if not isinstance(arn, int):
         raise ValueError("Это должно быть целое число неотрицательное число")
     if arn > 3:
         raise ValueError("Арность не больше 3")
@@ -29,7 +29,7 @@ def uncurry(f, arn):
 
     if arn < 0:
         raise ValueError("Арность не может быть отрицательной")
-    if type(arn) != int:
+    if not isinstance(arn, int):
         raise ValueError("Это должно быть целое число неотрицательное число")
     if arn > 3:
         raise ValueError("Арность не больше 3")
