@@ -1,82 +1,113 @@
-from itertools import product
+from itertools import permutations
 
-n = int(input("Введите n для доски n x n "))
-
-num = 0
-
-
-# переборный способ
-def diag(m):  # проверка на диагональт
-    for i in range(len(m)):
-        for j in range(i + 1, len(m)):
-            if abs(m[j] - m[i]) == abs(i - j):
+# проверка на диагонали
+def check_diagonal(queens):
+    for i in range(len(queens)):
+        for j in range(i + 1, len(queens)):
+            if abs(queens[j] - queens[i]) == abs(j - i):
                 return False
     return True
 
 
-def stolb(m):
-    for i in range(len(m)):
-        for j in range(i + 1, len(m)):
-            if m[i] == m[j]:
+# проверка на столбцы
+def check_column(queens):
+    for i in range(len(queens)):
+        for j in range(i + 1, len(queens)):
+            if queens[i] == queens[j]:
                 return False
     return True
 
 
-for u in product([i for i in range(n)], repeat=n):
-    # u - будет массив, где строка - индекс, столбец - число
-    # при таком задании фрези не стоят на одной стр
-    if stolb(u) and diag(u):
-        num += 1
-
-print(f"Количество перестановок (перестановочный способ): {num}")
-
-# рекурсивный способ, с исп уже написанных функций diag и stolb
-field = [0] * n
+# общая проверка расстановки
+def is_valid(queens):
+    return check_column(queens) and check_diagonal(queens)
 
 
-def solve(row):
-    count1 = 0
-
-    if row == n:
-        return True  # по факту 1 или 0, 1 означает, что расстановка верна
-
-    for i in range(n):
-        field[row] = i
-        q = field[: row + 1]  # учитывается часть, где ферзи поставлены
-        # ведь изначально массив заполнен просто одинаковыми числами
-        if stolb(q) and diag(q):
-            count1 += solve(row + 1)
-    return count1
-
-
-total = solve(0)
-
-print(f"Количество перестановок (рекурсивный способ): {total}")
-
-# своё решение, с исп уже написанных функций diag и stolb
-
-
-def mine(n):
-
-    board = [[]]
+# переборный способ с permutations
+def brute_force(n):
     count = 0
-    while len(board) != 0:
-
-        current = board.pop()  # т.е я беру последнюю подходяшую растановку
-        lenght = len(current)  # использую pop(), чтобы не было беск цикла
-
-        if lenght == n:
+    # permutations генерирует все перестановки столбцов
+    # это автоматически исключает ферзей в одном столбце
+    for perm in permutations(range(n)):
+        # остается проверить только диагонали
+        if check_diagonal(perm):
             count += 1
-            continue  # чтобы не уходить в цикл ниже
-            # ведь если длина равна n, то это подх решение
-
-        for i in range(n):  # перебираю столбцы
-            current1 = current + [i]  # пытаюсь добавить ферзя на след строку
-            if diag(current1) and stolb(current1):
-                board.append(current1)  # добавляю подходящий вариант на конкретно этом шаге
     return count
 
 
-total1 = mine(n)
+# рекурсивный backtracking
+def recursive(n):
+    queens = [-1] * n  # -1 значит ферзь еще не поставлен
+    count = 0
 
-print(f"Количество перестановок (третий способ): {total1}")
+    # проверка безопасности для новой позиции
+    def safe(row, col):
+        # проверяем со всеми уже поставленными ферзями
+        for prev_row in range(row):
+            prev_col = queens[prev_row]
+            # один столбец
+            if prev_col == col:
+                return False
+            # диагональ
+            if abs(prev_col - col) == abs(prev_row - row):
+                return False
+        return True
+
+    def place(row):
+        nonlocal count
+        # если дошли до конца - нашли решение
+        if row == n:
+            count += 1
+            return
+
+        # пробуем все столбцы для текущей строки
+        for col in range(n):
+            if safe(row, col):
+                queens[row] = col  # ставим ферзя
+                place(row + 1)     # переходим к след строке
+
+    place(0)
+    return count
+
+
+# итеративный backtracking (стек вместо рекурсии)
+def iterative(n):
+    count = 0
+    stack = [[]]  # стек с частичными решениями
+
+    while stack:
+        current = stack.pop()      # берем последнюю расстановку
+        length = len(current)      # сколько ферзей уже поставлено
+
+        # если поставили всех ферзей - это решение
+        if length == n:
+            count += 1
+            continue
+
+        # пробуем добавить ферзя в следующую строку
+        for col in range(n):
+            new = current + [col]  # новая расстановка
+            if is_valid(new):      # если подходит
+                stack.append(new)  # добавляем в стек для дальнейшего разбора
+
+    return count
+
+
+n = int(input("Введите размер доски n x n: "))
+
+print("1. Переборный метод:")
+result1 = brute_force(n)
+print(f"   Результат: {result1}")
+
+print("\n2. Рекурсивный метод:")
+result2 = recursive(n)
+print(f"   Результат: {result2}")
+
+print("\n3. Итеративный метод:")
+result3 = iterative(n)
+print(f"   Результат: {result3}")
+
+if result1 == result2 == result3:
+    print(f"\nВсе методы дали одинаковый результат: {result1}")
+else:
+    print(f"\nРезультаты различаются: {result1}, {result2}, {result3}")
