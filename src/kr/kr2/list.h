@@ -11,7 +11,7 @@ Node* list_append(Node* head, int value);
 Node* list_reverse(Node* head);
 void list_delete(Node** head);
 void list_print(Node* head);
-int is_symmetric(Node* head);  
-Node* copy_list(Node* head);  
-  
+int is_symmetric(Node* head);
+Node* copy_list(Node* head);
+
 #endif

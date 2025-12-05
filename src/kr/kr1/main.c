@@ -1,8 +1,9 @@
+#include "cyclic.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "cyclic.h"
 
-int main() {
+int main()
+{
     int n;
     printf("Введите количество бит: ");
     scanf("%d", &n);
@@ -14,11 +15,11 @@ int main() {
         scanf("%d", &bit);
         bits[i] = (bit == 1);
     }
-    
+
     int result = find_max(bits, n);
     printf("%d\n", result);
-    
+
     free(bits);
-    
+
     return 0;
 }
