@@ -1,9 +1,7 @@
-m = list(map(int, input().split()))
-
 def heap_sort(arr):
     if len(arr) == 0:
         return arr
-    
+
     m = arr
     n = len(m)
 
@@ -18,7 +16,7 @@ def heap_sort(arr):
             if left < n and m[left] > data:
                 index = left
                 data = m[left]
-            
+
             if right < n and m[right] > data:
                 index = right
                 data = m[right]
@@ -41,7 +39,7 @@ def heap_sort(arr):
             if left < i and m[left] > data:
                 index = left
                 data = m[left]
-            
+
             if right < i and m[right] > data:
                 index = right
                 data = m[right]
@@ -54,5 +52,7 @@ def heap_sort(arr):
 
     return m
 
-m = heap_sort(m)
-print(m)
+if __name__ == "__main__":
+    m = list(map(int, input().split()))
+    m = heap_sort(m)
+    print(m)

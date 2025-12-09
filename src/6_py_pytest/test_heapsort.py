@@ -1,9 +1,10 @@
 import random
+import pytest
 
 def heap_sort(arr):
     if len(arr) == 0:
         return arr
-    
+
     m = arr
     n = len(m)
 
@@ -18,7 +19,7 @@ def heap_sort(arr):
             if left < n and m[left] > data:
                 index = left
                 data = m[left]
-            
+
             if right < n and m[right] > data:
                 index = right
                 data = m[right]
@@ -41,7 +42,7 @@ def heap_sort(arr):
             if left < i and m[left] > data:
                 index = left
                 data = m[left]
-            
+
             if right < i and m[right] > data:
                 index = right
                 data = m[right]
@@ -76,41 +77,29 @@ def gnome(arr):
 def usual(arr):
     return sorted(arr)
 
-def test_empty():
-    assert heap_sort([]) == []
-    assert bubble([]) == []
-    assert gnome([]) == []
-    assert usual([]) == []
+@pytest.mark.parametrize("sort_func", [heap_sort, bubble, gnome, usual])
+def test_empty(sort_func):
+    assert sort_func([]) == []
 
-def test_single():
-    assert heap_sort([5]) == [5]
-    assert bubble([5]) == [5]
-    assert gnome([5]) == [5]
-    assert usual([5]) == [5]
+@pytest.mark.parametrize("sort_func", [heap_sort, bubble, gnome, usual])
+def test_single(sort_func):
+    assert sort_func([5]) == [5]
 
-def test_sorted():
-    assert heap_sort([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
-    assert bubble([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
-    assert gnome([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
-    assert usual([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
+@pytest.mark.parametrize("sort_func", [heap_sort, bubble, gnome, usual])
+def test_sorted(sort_func):
+    assert sort_func([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
 
-def test_reverse():
-    assert heap_sort([5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5]
-    assert bubble([5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5]
-    assert gnome([5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5]
-    assert usual([5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5]
+@pytest.mark.parametrize("sort_func", [heap_sort, bubble, gnome, usual])
+def test_reverse(sort_func):
+    assert sort_func([5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5]
 
-def test_duplicates():
-    assert heap_sort([3, 1, 4, 1, 5]) == [1, 1, 3, 4, 5]
-    assert bubble([3, 1, 4, 1, 5]) == [1, 1, 3, 4, 5]
-    assert gnome([3, 1, 4, 1, 5]) == [1, 1, 3, 4, 5]
-    assert usual([3, 1, 4, 1, 5]) == [1, 1, 3, 4, 5]
+@pytest.mark.parametrize("sort_func", [heap_sort, bubble, gnome, usual])
+def test_duplicates(sort_func):
+    assert sort_func([3, 1, 4, 1, 5]) == [1, 1, 3, 4, 5]
 
-def test_negative():
-    assert heap_sort([-2, -10, 100, 9]) == [-10, -2, 9, 100]
-    assert bubble([-2, -10, 100, 9]) == [-10, -2, 9, 100]
-    assert gnome([-2, -10, 100, 9]) == [-10, -2, 9, 100]
-    assert usual([-2, -10, 100, 9]) == [-10, -2, 9, 100]
+@pytest.mark.parametrize("sort_func", [heap_sort, bubble, gnome, usual])
+def test_negative(sort_func):
+    assert sort_func([-2, -10, 100, 9]) == [-10, -2, 9, 100]
 
 def test_heap_bubble():
     for _ in range(20):
