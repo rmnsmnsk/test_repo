@@ -1,5 +1,5 @@
 #include<stdio.h>
-
+#include"sort.h"
 int main(void){
 
     int m[100];
