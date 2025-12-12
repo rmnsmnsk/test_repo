@@ -1,3 +1,4 @@
+import pytest
 from heap_code import BinHeap
 
 
@@ -52,5 +53,13 @@ def test_empty():
     assert h.getMinimum() is None
     assert h.extractMin() is None
 
+if __name__ == "__main__":
+    test_insert()
+    test_get_min()
+    test_extract_min()
+    test_merge()
+    test_decrease_key()
+    test_delete()
+    test_empty()
 
 
