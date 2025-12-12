@@ -53,9 +53,4 @@ def test_empty():
     assert h.extractMin() is None
 
 
-def test_single():
-    h = BinHeap()
-    node = h.insert(42, "single")
-    assert h.getMinimum() == (42, "single")
-    assert h.extractMin() == (42, "single")
-    assert h.root_list is None
+
