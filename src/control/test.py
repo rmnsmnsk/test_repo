@@ -1,4 +1,3 @@
-import pytest
 from heap_code import BinHeap
 
 
