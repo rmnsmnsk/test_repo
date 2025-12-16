@@ -1,51 +1,41 @@
+def curry(f, arity):
+    def curried(*args):
+        if len(args) >= arity:
+            return f(*args)
+        else:
+            def next_func(next_arg):
+                return curried(*args + (next_arg,))
+            return next_func
+    return curried
+
+
+def uncurry(curried_func, arity):
+    def uncurried_func(*args):
+        if len(args) != arity:
+            raise ValueError(f"Ожидается {arity} аргументов, получено {len(args)}")
+        
+        result = curried_func
+        for arg in args:
+            result = result(arg)
+        return result
+    
+    return uncurried_func
+
+
 def sum(x, y, z):
     return x + y + z
 
 
-def curry(f, arn):
-
-    if arn < 0:
-        raise ValueError("Арность не может быть отрицательной")
-    if not isinstance(arn, int):
-        raise ValueError("Это должно быть целое число неотрицательное число")
-    if arn > 3:
-        raise ValueError("Арность не больше 3")
-
-    def curry2(*args):
-
-        if len(args) >= arn:
-            return f(*args)
-
-        else:
-            def next(next_arg):
-                args1 = (next_arg,) + args
-                return curry2(*args1)
-            return next
-
-    return curry2
+def sub(x, y):
+    return x - y
 
 
-def uncurry(f, arn):
+if __name__ == "__main__":
+    sum3_curry = curry(sum, 3)
+    sum3_uncurry = uncurry(sum3_curry, 3)
 
-    if arn < 0:
-        raise ValueError("Арность не может быть отрицательной")
-    if not isinstance(arn, int):
-        raise ValueError("Это должно быть целое число неотрицательное число")
-    if arn > 3:
-        raise ValueError("Арность не больше 3")
+    print(sum3_curry(1)(2)(3))
+    print(sum3_uncurry(1, 2, 3))
 
-    def q(*args):
-
-        sum = f
-
-        for argument in args:
-            sum = sum(argument)
-
-        return sum
-    
-    return q
-
-sum3_curry = curry(sum, 3)
-sum3_uncurry = uncurry(sum3_curry, 3)
-print(sum3_curry(1)(2)(3))    # 6
-print(sum3_uncurry(1, 2, 3))  # 6
+    sub_curry = curry(sub, 2)
+    print(sub_curry(10)(2))
