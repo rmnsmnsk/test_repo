@@ -3,8 +3,7 @@ class Graph:
     def __init__(self):
         self.graph = {}
 
-    def add_point(self, a, b):
-
+    def add_edge(self, a, b):
         if a not in self.graph:
             self.graph[a] = []
         if b not in self.graph:
@@ -12,6 +11,10 @@ class Graph:
 
         self.graph[a].append(b)
         self.graph[b].append(a)
+
+    def add_vertex(self, a):
+        if a not in self.graph:
+            self.graph[a] = []
 
     def dfs(self, start):
 
@@ -60,12 +63,12 @@ g = Graph()
 #   F
 
 g = Graph()
-g.add_point('A', 'B')
-g.add_point('A', 'C')
-g.add_point('B', 'D')
-g.add_point('C', 'E')
-g.add_point('D', 'F')
-g.add_point('E', 'F')
+g.add_edge('A', 'B')
+g.add_edge('A', 'C')
+g.add_edge('B', 'D')
+g.add_edge('C', 'E')
+g.add_edge('D', 'F')
+g.add_edge('E', 'F')
 
 for j in g:
     print(j)
