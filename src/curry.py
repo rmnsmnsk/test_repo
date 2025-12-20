@@ -4,6 +4,10 @@ def curry(func, n):
     if n < 0:
         raise ValueError("n должно быть неотрицательным числом")
     
+    arg_count = func.__code__.co_argcount
+    if n > arg_count:
+        raise ValueError(f"n ({n}) превышает количество параметров функции ({arg_count})")
+    
     def curried(*args):
         if len(args) >= n:
             return func(*args)
@@ -43,4 +47,4 @@ if __name__ == "__main__":
     print(sum3_uncurry(1, 2, 3))
  
     sub_curry = curry(sub, 2)
-    print(sub_curry(10)(2)) 
+    print(sub_curry(10)(2))
