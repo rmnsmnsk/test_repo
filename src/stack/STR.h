@@ -1,16 +1,14 @@
-#ifndef STACK_H
-#define STACK_H
+#pragma once
 
-typedef struct obj{
-    int data;
-    struct obj* next;
-}Elem;
+typedef struct Elem {
+    char data;
+    struct Elem* next;
+} Elem;
 
-Elem* new(void); //создаю голову, указатель указывает на NULL
-Elem* push(Elem* top , char data); //добавляю на вершину стэка новый элемент, при этом функция возвращает указатель на самый верхний элемент
-char pop(Elem** top); //удаляется верхний элемент, при этом возвращается его значение
-void peek(Elem* top); //просто показывает самый верхний элемент
-void delete(Elem** top);//очищает стэк
-char see(Elem* top); //именно вернуть значение последенего элемента
-void delete1(Elem** top); //удалить 1 элемент, без возврата
-#endif
+Elem* stack_new(void);
+Elem* push(Elem* top, char data);
+char pop(Elem** top);
+char peek(Elem* top);
+void stack_delete(Elem** top);
+void print_top(Elem* top);
+void delete_top(Elem** top);

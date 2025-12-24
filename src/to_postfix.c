@@ -22,7 +22,7 @@ int main(void){
     char c;
     char q;
 
-    Elem* top = new();
+    Elem* top = stack_new();
     printf("Put the string\n");
     while ((c = getchar()) != '\n'){ //конец ввода отделяется пробелом
 	if (c == ' '){
@@ -38,7 +38,7 @@ int main(void){
                 top = push(top, c);
             }
             else if (c == ')'){
-                while (see(top) != '('){
+                while (peek(top) != '('){
                     q = pop(&top);
                     posl[i] = q;
                     ++i;
@@ -47,7 +47,7 @@ int main(void){
 
             }
             else if (isoperator(c)){
-                while (priority(see(top)) >= priority(c) && top != NULL && see(top) != '('){
+                while (priority(peek(top)) >= priority(c) && top != NULL && peek(top) != '('){
                     q = pop(&top);
                     posl[i] = q;
 		    ++i;
