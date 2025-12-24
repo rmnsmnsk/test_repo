@@ -1,51 +1,28 @@
-#include "STR.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include "STR.h"
 
-Elem* new(void){
+Elem* stack_new(void) {
     return NULL;
 }
 
-Elem* push(Elem* top , char data){
-
-    Elem* pt = malloc(sizeof(Elem));
-    pt -> data = data;
-    pt -> next = top;
-    return pt;
-
+Elem* push(Elem* top, char data) {
+    Elem* new_elem = (Elem*)malloc(sizeof(Elem));
+    if (new_elem == NULL) {
+        return NULL;
+    }
+    new_elem->data = data;
+    new_elem->next = top;
+    return new_elem;
 }
 
-char pop(Elem** top){ //т.к нужно взять последний элемент, то top нужно будет перезаписать, а для этого сам top нужно будет изменить
-
-    if (*top == NULL){
-        printf("Stack is empty\n");
+char pop(Elem** top) {
+    if (*top == NULL) {
         return '\0';
     }
-    char data = (*top) -> data;
-    Elem* now = (*top);
-    *top = now -> next;
-    free(now);
+    Elem* temp = *top;
+    char data = temp->data;
+    *top = (*top)->next;
+    free(temp);
     return data;
-
-}
-
-void peek(Elem *top){
-
-    if (top == NULL){
-        printf("Stack is empty\n");
-        return;
-    }
-    char symbol = top -> data;
-    printf("%c", symbol);
-}
-
-void delete(Elem** top){ //аналогично с pop я должен менять не копию, а оригинал
-
-    while (*top != NULL){
-        Elem* back = (*top) -> next;
-        free(*top);
-        *top = back;
-    }
-
 }
