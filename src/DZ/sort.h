@@ -1,3 +1,3 @@
 #pragma once
 
-int sort(int* arr, int n);
+int sort(int *arr, int n);

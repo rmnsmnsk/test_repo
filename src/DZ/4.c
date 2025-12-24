@@ -1,25 +1,20 @@
-#include<stdio.h>
-#include"sort.h"
-int main(void){
+#include "sort.h"
+#include <stdio.h>
 
-    int m[100];
-    int c, d, x = 0, n;
+int main() {
+  int m[100];
+  int n = 0;
 
-    printf("Put the count of numbers\n");
-    scanf("%d", &n);
+  while (scanf("%d", &m[n]) == 1 && n < 100) {
+    n++;
+  }
 
-    while((scanf("%d", &c)) == 1){ //потому что scanf возвращает кол-во успешно прочитанных элементов, пока элементы числа, считывание продолжается
+  int count1 = sort(m, n);
 
-        m[x] = c;
-        ++x;
+  for (int i = 0; i < n; i++) {
+    printf("%d ", m[i]);
+  }
+  printf("\n");
 
-        if ((c = getchar()) == '\n'){
-        break;
-        }
-    }
-
-    int count1 = sort(m, n);
-
-    printf("%d", count1);
-
+  return count1;
 }
