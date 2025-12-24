@@ -6,10 +6,10 @@
 
 bool* binary(int i)
 {
-    bool* bits = (bool*)malloc(sizeof(bool) * BITS);
+    bool* bits = (bool*)calloc(BITS, sizeof(bool));
 
-    for (int j = 0; j < BITS; j++) {
-        bits[j] = false;
+    if (bits == NULL) {
+        return NULL;
     }
 
     int j = BITS - 1;
@@ -23,7 +23,7 @@ bool* binary(int i)
     } else {
         i *= -1;
 
-        while (i > 0) {
+        while (i > 0 && j >= 0) {
             bits[j] = (i % 2);
             i /= 2;
             j -= 1;
@@ -33,10 +33,10 @@ bool* binary(int i)
             bits[k] = !bits[k];
         }
 
-        bool* one = (bool*)malloc(sizeof(bool) * BITS);
-
-        for (int r = 0; r < BITS; r++) {
-            one[r] = false;
+        bool* one = (bool*)calloc(BITS, sizeof(bool));
+        if (one == NULL) {
+            free(bits);
+            return NULL;
         }
 
         one[BITS - 1] = true;

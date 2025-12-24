@@ -5,18 +5,18 @@
 
 bool* summ(bool* i, bool* j)
 {
-    bool* bits = (bool*)malloc(sizeof(bool) * BITS);
+    bool* bits = (bool*)calloc(BITS, sizeof(bool));
 
-    for (int j = 0; j < BITS; j++) {
-        bits[j] = false;
+    if (bits == NULL) {
+        return NULL;
     }
 
-    bool flag = false;
+    bool carry = false;
 
     for (int k = BITS - 1; k >= 0; --k) {
-        bool number = (i[k] + j[k] + flag) % 2;
+        bool number = (i[k] + j[k] + carry) % 2;
         bits[k] = number;
-        flag = ((i[k] + j[k] + flag) >= 2);
+        carry = ((i[k] + j[k] + carry) >= 2);
     }
 
     return bits;
