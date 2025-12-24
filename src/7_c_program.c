@@ -1,127 +1,121 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-typedef struct arr{
-    
+typedef struct ListNode {
     int data;
-    struct arr* next;
+    struct ListNode* next;
+} ListNode;
 
-}arr;
-
-arr* new(){
+ListNode* list_new() {
     return NULL;
 }
 
-arr* insert(arr* head, int value){
+ListNode* list_insert(ListNode* head, int value) {
+    ListNode* new_node = (ListNode*)malloc(sizeof(ListNode));
+    if (new_node == NULL) {
+        printf("Ошибка выделения памяти\n");
+        return head;
+    }
+    new_node->data = value;
 
-    arr* new_node = (arr*)malloc(sizeof(arr));
-    new_node -> data = value;
-
-    if (head == NULL || value < head -> data){
-        new_node -> next = head;
+    if (head == NULL || value < head->data) {
+        new_node->next = head;
         return new_node;
-        
     }
     
-    arr* current = head;
-
-    for (int i = 0; current -> next != NULL && current -> next -> data < value; ++i){
-        current = current -> next;
+    ListNode* current = head;
+    while (current->next != NULL && current->next->data < value) {
+        current = current->next;
     }
 
-    new_node -> next = current -> next;
-    current -> next = new_node;
+    new_node->next = current->next;
+    current->next = new_node;
     return head;
-
-
 }
 
-int get(arr *head, int index){
-
-    if (index < 0){
+int list_get(ListNode* head, int index) {
+    if (index < 0) {
         printf("Индекс не может быть отрицательным\n");
         return -1;
     }
-    if (head == NULL){
+    if (head == NULL) {
         printf("Список пуст\n");
         return -1;
     }
 
-    arr* current = head;
-    for (int i = 0; i < index; ++i){
-        current = current -> next;
-        if (current == NULL){
-        printf("Вне диапазона\n");
-        return -1;
+    ListNode* current = head;
+    for (int i = 0; i < index; ++i) {
+        current = current->next;
+        if (current == NULL) {
+            printf("Вне диапазона\n");
+            return -1;
         }
     }
-    return current -> data;
-
+    return current->data;
 }
 
-arr* removeElem(arr* head, int index){
-    
-    if (index < 0){
+ListNode* list_remove(ListNode* head, int index) {
+    if (index < 0) {
         printf("Индекс не может быть отрицательным\n");
         return head;
     }
 
-    if (head == NULL){
+    if (head == NULL) {
         printf("Список пуст\n");
         return head;
     }
 
-    if (index == 0){
-        arr *head1 = head -> next;
+    if (index == 0) {
+        ListNode* new_head = head->next;
         free(head);
-        return head1;
+        return new_head;
     }
 
-    arr* current = head;
-
-    for (int i = 0; i < index - 1 && current != NULL; ++i){
-        current = current -> next;
+    ListNode* current = head;
+    for (int i = 0; i < index - 1 && current != NULL; ++i) {
+        current = current->next;
     }
-    if (current == NULL || current->next == NULL){
+    
+    if (current == NULL || current->next == NULL) {
         printf("Индекс вне диапазона\n");
         return head;
     }
-    arr* elem = current -> next;
-    current -> next = current -> next -> next;
+    
+    ListNode* elem = current->next;
+    current->next = current->next->next;
     free(elem);
     return head;
-
 }
 
-void delete(arr** head){
-
-    if (*head == NULL){
+void list_delete(ListNode** head) {
+    if (*head == NULL) {
         printf("Список уже пуст\n");
+        return;
     }
 
-    while ((*head) != NULL){
-        arr* back = (*head) -> next;
+    while ((*head) != NULL) {
+        ListNode* back = (*head)->next;
         free(*head);
-    (*head) = back;
+        (*head) = back;
     }
 }
 
-void printList(arr *head){
-    
-    if (head == NULL){
+void list_print(ListNode* head) {
+    if (head == NULL) {
         printf("Список пуст\n");
+        return;
     }
 
-    arr* current = head;
-    while (current != NULL){
-        printf("%d ", current -> data);
-        current = current -> next;
+    ListNode* current = head;
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->next;
     }
-
+    printf("\n");
 }
 
 int main() {
-    arr* list = new();
+    ListNode* list = list_new();
     int choice, value, index;
 
     printf("Программа для работы с сортированным списком\n");
@@ -139,25 +133,24 @@ int main() {
         switch (choice) {
             case 0:
                 printf("Выход из программы\n");
-                delete(&list);
+                list_delete(&list);
                 return 0;
                 
             case 1:
                 printf("Введите значение для добавления: ");
                 scanf("%d", &value);
-                list = insert(list, value);
+                list = list_insert(list, value);
                 break;
                 
             case 2:
-                printf("Введите индекс для удаления\n");
+                printf("Введите индекс для удаления: ");
                 scanf("%d", &index);
-                list = removeElem(list, index);
+                list = list_remove(list, index);
                 break;
         
             case 3:
                 printf("Содержимое списка: ");
-                printList(list); 
-                printf("\n");
+                list_print(list);
                 break;
         }
     }
